@@ -1,5 +1,6 @@
 package com.learning.helpler;
 
+import com.learning.constant.Provider;
 import com.learning.entity.User;
 import com.learning.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,7 @@ public class CsvUserDataLoader implements CommandLineRunner {
                     .username(username)
                     .password(passwordEncoder.encode(rawPassword))
                     .role(role)
+                    .provider(Provider.LOCAL)
                     .build();
 
             userRepository.save(user);

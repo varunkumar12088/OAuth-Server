@@ -1,5 +1,6 @@
 package com.learning.config;
 
+import com.learning.security.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -17,11 +19,10 @@ public class SecurityConfig {
 
     private static final String[] AUTH_PUBLIC_URLS = {
             "/api/v1/auth/**",
-            "/v3/api-docs/**",
-            "/swagger-ui.html",
-            "/swagger-ui/**",
             "/h2-console/**"
     };
+
+    private final JwtAuthFilter  jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,11 +39,11 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
-                .oauth2Login(oauth2 ->
+               /* .oauth2Login(oauth2 ->
                         oauth2.successHandler(null)
                                 .failureHandler(null)
-                        )
-
+                        )*/
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
         ;
 
         return http.build();
