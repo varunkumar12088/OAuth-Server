@@ -18,3 +18,12 @@ spring:
 
 
 server.port: 8083
+
+security:
+  jwt:
+    access-ttl-seconds: 600
+    refresh-ttl-seconds: 8600
+    refresh-token-cookies-name: refreshToken
+    cookie-secure: true
+    cookie-http-only: true
+    cookie-same-site: lax
