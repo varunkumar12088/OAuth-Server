@@ -3,6 +3,7 @@ package com.learning.service.impl;
 import com.learning.entity.User;
 import com.learning.repository.UserRepository;
 import com.learning.service.UserService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void thirdPartyRegistration(User user) {
+        if(ObjectUtils.isEmpty(user)) {
+            return;
+        }
+        if(userRepository.existsByUsername(user.getUsername())) {
+            return;
+        }
+        userRepository.save(user);
     }
 }
