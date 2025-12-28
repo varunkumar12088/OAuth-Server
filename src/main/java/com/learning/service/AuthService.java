@@ -1,8 +1,19 @@
 package com.learning.service;
 
-import com.learning.entity.User;
+import com.learning.dto.AuthResponse;
+import com.learning.dto.LoginRequest;
+import com.learning.dto.UserDto;
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface AuthService {
 
-    public User login(String username, String password);
+
+    AuthResponse login(LoginRequest loginRequest);
+
+    AuthResponse logout();
+
+    AuthResponse refreshToken();
+
+    AuthResponse register(UserDto user);
+
 }

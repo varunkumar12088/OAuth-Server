@@ -21,9 +21,14 @@ server.port: 8083
 
 security:
   jwt:
+    secret: test
+    issuer: localhost
     access-ttl-seconds: 600
     refresh-ttl-seconds: 8600
-    refresh-token-cookies-name: refreshToken
-    cookie-secure: true
-    cookie-http-only: true
-    cookie-same-site: lax
+  cookies:
+    refresh-token-name: refreshToken
+    is-secure: true
+    is-http-only: true
+    same-site: lax
+    domain: localhost
+    path: "/"
